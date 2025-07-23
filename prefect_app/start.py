@@ -1,11 +1,13 @@
-import subprocess
-import os
+import subprocess, os
 
-# Port and database
+# Set required environment variables
+os.environ["PREFECT_API_DATABASE_CONNECTION_URL"] = "sqlite+aiosqlite:///prefect.db"
 os.environ["PREFECT_API_PORT"] = "4200"
-os.environ["PREFECT_SERVER_ALLOW_EPHEMERAL_MODE"] = "false"
-os.environ["PREFECT_ORION_DATABASE_CONNECTION_URL"] = "sqlite+aiosqlite:///prefect.db"
 
-print("🚀 Starting Prefect Server")
-subprocess.run(["prefect", "server", "start"])
+print("🚀 Starting Prefect Server on 0.0.0.0:4200")
+subprocess.run([
+    "prefect", "server", "start",
+    "--host", "0.0.0.0",  # THIS IS CRITICAL
+    "--port", "4200"
+])
 
