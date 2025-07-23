@@ -1,13 +1,7 @@
-import subprocess, os
+import uvicorn
+from prefect.server.api.server import app
 
-# Set required environment variables
-os.environ["PREFECT_API_DATABASE_CONNECTION_URL"] = "sqlite+aiosqlite:///prefect.db"
-os.environ["PREFECT_API_PORT"] = "4200"
-
-print("🚀 Starting Prefect Server on 0.0.0.0:4200")
-subprocess.run([
-    "prefect", "server", "start",
-    "--host", "0.0.0.0",  # THIS IS CRITICAL
-    "--port", "4200"
-])
+if __name__ == "__main__":
+    print("🔌 Launching Prefect API server on 0.0.0.0:4200")
+    uvicorn.run(app, host="0.0.0.0", port=4200)
 
